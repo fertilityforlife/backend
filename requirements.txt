@@ -1,0 +1,7 @@
+flask
+openai
+flask_cors
+os
+time
+requests
+json
