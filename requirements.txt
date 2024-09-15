@@ -1,7 +1,5 @@
-flask
+Flask
 openai
-flask_cors
-os
-time
+flask-cors
 requests
-json
+python-dotenv
