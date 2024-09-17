@@ -6,21 +6,37 @@ import os
 import time
 import requests
 import json
+import boto3
+from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": ["http://z2z.a41.mytemp.website", "http://127.0.0.1:5000", "http://127.0.0.1:8080"]}})  # Replace with your actual frontend URL
+CORS(app, resources={r"/api/*": {"origins": ["fertilityforlife.com","http://z2z.a41.mytemp.website", "http://127.0.0.1:5000", "http://127.0.0.1:8080"]}})
+
+# Function to retrieve secrets from AWS Secrets Manager
+def get_secret(secret_name):
+    client = boto3.client('secretsmanager', region_name='eu-west-2') 
+    try:
+        response = client.get_secret_value(SecretId=secret_name)
+        secret = json.loads(response['SecretString'])
+        return secret
+    except (NoCredentialsError, PartialCredentialsError) as e:
+        print(f"Error retrieving secrets: {e}")
+        return None
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+# OPENAI_API_KEY = get_secret('OPENAI_API_KEY')
 
 # Access the API key from the environment variable
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 assistant_id = os.getenv('ASSISTANT_ID')
+# assistant_id = get_secret('ASSISTANT_ID')
+
 summarization_assistant_id = os.getenv('SUMMARIZATION_ASSISTANT_ID')
+# summarization_assistant_id = get_secret('SUMMARIZATION_ASSISTANT_ID')
 
 def summarise_conversation(conversation): 
     # Create a new thread
@@ -166,7 +182,6 @@ def end_chat():
         summary = summarise_conversation(conversation)
         
         # Add the summary to the top of the conversation
-
         conversation.insert(0, {"role": "summary_assistant", "content": summary})
         with open('conversation.json', 'w') as f:
             json.dump(conversation, f, indent=4)
