@@ -17,7 +17,7 @@ CORS(app, resources={r"/api/*": {"origins": ["fertilityforlife.com","http://z2z.
 
 app.config['ENV'] = os.getenv('FLASK_ENV')
 
-Function to retrieve secrets from AWS Secrets Manager
+# Function to retrieve secrets from AWS Secrets Manager
 def get_secret(secret_name):
     client = boto3.client('secretsmanager', region_name='eu-west-2') 
     try:
