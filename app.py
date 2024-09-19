@@ -6,8 +6,8 @@ import os
 import time
 import requests
 import json
-import boto3
-from botocore.exceptions import NoCredentialsError, PartialCredentialsError
+# import boto3
+# from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 from dotenv import load_dotenv
 
 load_dotenv()
