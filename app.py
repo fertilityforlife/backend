@@ -15,16 +15,18 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": ["fertilityforlife.com","http://z2z.a41.mytemp.website", "http://127.0.0.1:5000", "http://127.0.0.1:8080"]}})
 
+app.config['ENV'] = os.getenv('FLASK_ENV')
+
 # Function to retrieve secrets from AWS Secrets Manager
-def get_secret(secret_name):
-    client = boto3.client('secretsmanager', region_name='eu-west-2') 
-    try:
-        response = client.get_secret_value(SecretId=secret_name)
-        secret = json.loads(response['SecretString'])
-        return secret
-    except (NoCredentialsError, PartialCredentialsError) as e:
-        print(f"Error retrieving secrets: {e}")
-        return None
+# def get_secret(secret_name):
+#     client = boto3.client('secretsmanager', region_name='eu-west-2') 
+#     try:
+#         response = client.get_secret_value(SecretId=secret_name)
+#         secret = json.loads(response['SecretString'])
+#         return secret
+#     except (NoCredentialsError, PartialCredentialsError) as e:
+#         print(f"Error retrieving secrets: {e}")
+#         return None
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 # OPENAI_API_KEY = get_secret('OPENAI_API_KEY')
