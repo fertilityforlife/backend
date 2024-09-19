@@ -6,8 +6,8 @@ import os
 import time
 import requests
 import json
-# import boto3
-# from botocore.exceptions import NoCredentialsError, PartialCredentialsError
+import boto3
+from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -17,16 +17,16 @@ CORS(app, resources={r"/api/*": {"origins": ["fertilityforlife.com","http://z2z.
 
 app.config['ENV'] = os.getenv('FLASK_ENV')
 
-# Function to retrieve secrets from AWS Secrets Manager
-# def get_secret(secret_name):
-#     client = boto3.client('secretsmanager', region_name='eu-west-2') 
-#     try:
-#         response = client.get_secret_value(SecretId=secret_name)
-#         secret = json.loads(response['SecretString'])
-#         return secret
-#     except (NoCredentialsError, PartialCredentialsError) as e:
-#         print(f"Error retrieving secrets: {e}")
-#         return None
+Function to retrieve secrets from AWS Secrets Manager
+def get_secret(secret_name):
+    client = boto3.client('secretsmanager', region_name='eu-west-2') 
+    try:
+        response = client.get_secret_value(SecretId=secret_name)
+        secret = json.loads(response['SecretString'])
+        return secret
+    except (NoCredentialsError, PartialCredentialsError) as e:
+        print(f"Error retrieving secrets: {e}")
+        return None
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 # OPENAI_API_KEY = get_secret('OPENAI_API_KEY')
