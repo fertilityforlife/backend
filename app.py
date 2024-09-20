@@ -88,7 +88,7 @@ def summarise_conversation(conversation):
     return summary
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home():
     return "Welcome to the Fertility Center Assistant!"
 
