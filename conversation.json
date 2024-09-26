@@ -1,0 +1,14 @@
+[
+    {
+        "role": "summary_assistant",
+        "content": "I'm ready to assist you. How can I help you today? If you have any specific questions or concerns, feel free to share!"
+    },
+    {
+        "role": "user",
+        "content": "hi"
+    },
+    {
+        "role": "assistant",
+        "content": "Hello! How can I assist you today? If you have any questions about fertility treatments or reproductive health, feel free to ask. I'm here to help!"
+    }
+]
